@@ -18,7 +18,7 @@ plt.rcParams['axes.unicode_minus'] = False
 volume_single_cm3 = 315  # (예: 315.0)
 
 # 단일 사과 질량 (g)
-mass_single_g = 30000     # (예: 280.0)
+mass_single_g = 260     # (예: 280.0)
 
 # 플라스틱 상자 규격 (18,000 cm^3)
 box_volume_cm3 = 40.0 * 30.0 * 15.0  
