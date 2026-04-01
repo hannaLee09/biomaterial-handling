@@ -9,9 +9,9 @@ import matplotlib.pyplot as plt
 from matplotlib.widgets import Slider
 
 # 1. 초기 변수
-initial_tau_y = 20.0  # 항복 응력 (Pa)
+initial_tau_y = 15.0  # 항복 응력 (Pa) 20.0
 initial_K = 5.0       # 농도 계수
-initial_n = 0.6       # 유동 지수 (주로 n < 1 인 전단 박화 현상 동반)
+initial_n = 0.5       # 유동 지수 (주로 n < 1 인 전단 담화 현상 동반) 0.6
 
 shear_rate = np.linspace(0, 100, 500)
 
