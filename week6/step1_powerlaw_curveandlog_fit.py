@@ -9,6 +9,7 @@ scipy.optimize.curve_fit을 이용해 산출하는 기본 알고리즘입니다.
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
+from scipy.stats import linregress
 
 # 1. 가상의 실험 데이터 보간 (전분 풀 - Pseudoplastic 유체 가정)
 # 전단 속도 (Shear Rate, 1/s): 10 ~ 100
@@ -31,7 +32,37 @@ print(f"--- Power Law 피팅 결과 ---")
 print(f"농도 계수 (K): {K_est:.4f} Pa·s^n")
 print(f"유동 지수 (n): {n_est:.4f}")
 
+# 3. 최적 계수 찾기 (log Fitting)
+log_shear_rate = np.log(shear_rate_data)
+log_shear_stress = np.log(shear_stress_data)
+
+slope, intercept, r_value, p_value, std_err = linregress(log_shear_rate, log_shear_stress)
+
+n_est_log = slope
+K_est_log = np.exp(intercept)
+
+print(f"--- Power Law log transfer 결과 ---")
+print(f"농도 계수 (K): {K_est_log:.4f} Pa·s^n")
+print(f"유동 지수 (n): {n_est_log:.4f}")
+
+plt.figure(figsize=(8, 6))
+
+plt.scatter(log_shear_rate, log_shear_stress, color='blue', label='Log Data')
+
 # 4. 결괏값 도식화 및 그래프 모델
+# 직선
+log_fit = intercept + slope * log_shear_rate
+plt.plot(log_shear_rate, log_fit, color='red',
+         label=f'Linear Fit (n={n_est_log:.2f})')
+
+plt.title('Log-Log Linearization of Power Law')
+plt.xlabel('log(Shear Rate)')
+plt.ylabel('log(Shear Stress)')
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.legend()
+
+
+
 shear_rate_smooth = np.linspace(0, 100, 200)
 shear_stress_fit = power_law(shear_rate_smooth, K_est, n_est)
 
